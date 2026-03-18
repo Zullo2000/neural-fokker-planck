@@ -1,0 +1,46 @@
+# Original reference material (not part of this repo)
+Arthur_Bizzi/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+dist/
+build/
+*.egg
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Jupyter
+.ipynb_checkpoints/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Results (generated, not tracked)
+results/
+
+# PyTorch
+*.pt
+*.pth
+*.ckpt
+
+# Claude Code metadata
+.claude/
+
+# Archives
+*.tar
+
+# Internal handoff docs
+handoff_*.md
