@@ -2,11 +2,19 @@
 
 **Learning stochastic differential equations from distribution snapshots via deterministic moment dynamics.**
 
+<p align="center">
+  <img src="assets/snapshot_drift_comparison.png" width="75%"><br>
+  <em>Nonlinear drift recovery: NFPE learns the true cubic drift F(x) = −x³ from distribution snapshots alone — no trajectories, no density estimation, no SDE simulation.</em>
+</p>
+
+> **No SDE simulation. No density estimation. No trajectory tracking.**
+> NFPE learns both drift and diffusion from distribution snapshots using only sample means and covariances — 24× faster than Neural SDEs.
+
 NFPE learns both the drift $F$ and diffusion $B$ of an unknown SDE
 
 $$dX = F(X)\,dt + B(X)\,dW_t$$
 
-by converting the stochastic learning problem into a deterministic optimization over Gaussian moments. It requires **no SDE simulation during training**, **no density estimation**, and **no trajectory tracking** — only the sample mean and covariance at each observation time.
+by converting the stochastic learning problem into a deterministic optimization over Gaussian moments.
 
 ## The Method
 
@@ -131,7 +139,7 @@ NFPE vs Neural SDE (same architecture, 500 epochs, GPU):
 ## Installation
 
 ```bash
-git clone https://github.com/AlessandroZul/neural-fokker-planck.git
+git clone https://github.com/Zullo2000/neural-fokker-planck.git
 cd neural-fokker-planck
 pip install -e .
 ```
