@@ -4,11 +4,11 @@
 
 <p align="center">
   <img src="assets/snapshot_drift_comparison.png" width="75%"><br>
-  <em>Nonlinear drift recovery: NFPE learns the true cubic drift F(x) = −x³ from distribution snapshots alone — no trajectories, no density estimation, no SDE simulation.</em>
+  <em>Nonlinear drift recovery: NFPE learns the true cubic drift F(x) = −x³ from distribution snapshots alone,no trajectories, no density estimation, no SDE simulation.</em>
 </p>
 
 > **No SDE simulation. No density estimation. No trajectory tracking.**
-> NFPE learns both drift and diffusion from distribution snapshots using only sample means and covariances — 24× faster than Neural SDEs.
+> NFPE learns both drift and diffusion from distribution snapshots using only sample means and covariances,24× faster than Neural SDEs.
 
 NFPE learns both the drift $F$ and diffusion $B$ of an unknown SDE
 
@@ -26,7 +26,7 @@ $$\dot{\mu}_k = F(\mu_k)$$
 
 $$\dot{\Sigma}_k = D_F(\mu_k)\,\Sigma_k + \Sigma_k\,D_F(\mu_k)^\top + B(\mu_k)\,B(\mu_k)^\top$$
 
-where $D_F$ is the Jacobian of the drift. These are deterministic — no stochastic integration, no Monte Carlo.
+where $D_F$ is the Jacobian of the drift. These are deterministic,no stochastic integration, no Monte Carlo.
 
 ### Forward-backward training
 
@@ -38,10 +38,10 @@ plus analogous terms for the covariance dynamics. This cleanly separates drift f
 
 ### Snapshot learning
 
-NFPE's key differentiator: it learns from **distribution snapshots** where individual particles are not tracked across time. The training pipeline only uses the sample mean $\hat{\mu}$ and sample covariance $\hat{\Sigma}$ at each observation time — both are permutation-invariant statistics that require no particle correspondence.
+NFPE's key differentiator: it learns from **distribution snapshots** where individual particles are not tracked across time. The training pipeline only uses the sample mean $\hat{\mu}$ and sample covariance $\hat{\Sigma}$ at each observation time,both are permutation-invariant statistics that require no particle correspondence.
 
 This opens NFPE to applications where trajectory data does not exist:
-- **Flow cytometry**: cells are destroyed by measurement — no trajectories
+- **Flow cytometry**: cells are destroyed by measurement,no trajectories
 - **Financial cross-sections**: you observe the distribution of asset prices, not individual histories
 - **Epidemiology**: you observe disease state distributions across a population
 
@@ -59,7 +59,7 @@ This opens NFPE to applications where trajectory data does not exist:
 
 ## Results
 
-### Snapshot learning — no trajectory tracking needed
+### Snapshot learning,no trajectory tracking needed
 
 NFPE produces identical results whether particles are tracked or shuffled, and competitive results from fully independent snapshots.
 
@@ -91,20 +91,20 @@ NFPE produces identical results whether particles are tracked or shuffled, and c
 
 ### Black-Scholes parameter recovery
 
-Geometric Brownian Motion: $dX = 2.5\,X\,dt + 0.4\,X\,dW$ — a 1D multiplicative-noise SDE from quantitative finance. NFPE recovers drift and diffusion parameters competitive with RESS (a full-likelihood baseline), from 20 trajectories observed at 30 time points.
+Geometric Brownian Motion: $dX = 2.5\,X\,dt + 0.4\,X\,dW$,a 1D multiplicative-noise SDE from quantitative finance. NFPE recovers drift and diffusion parameters competitive with RESS (a full-likelihood baseline), from 20 trajectories observed at 30 time points.
 
 | Method | $f_1$ (drift) | $b_1$ (diffusion) |
 |---|---|---|
 | True | 2.500 | 0.400 |
 | RESS [Iannacone & Gardoni 2024] | 2.420 | 0.361 |
-| **NFPE (forward-backward)** | **2.427** | — |
+| **NFPE (forward-backward)** | **2.427** |,|
 | NFPE (forward-only) | 2.476 | 0.364 |
 
 The forward-backward scheme yields better drift recovery than the forward-only ablation, demonstrating the value of the disentanglement mechanism.
 
 ### Multi-dimensional scaling (OU benchmark)
 
-Tested on the same systems as PFI (Zhang et al., NeurIPS 2025), with a random positive-definite drift matrix $\Theta$. NFPE jointly learns **both** drift and diffusion — PFI requires diffusion to be known.
+Tested on the same systems as PFI (Zhang et al., NeurIPS 2025), with a random positive-definite drift matrix $\Theta$. NFPE jointly learns **both** drift and diffusion,PFI requires diffusion to be known.
 
 | Dimension | Drift Rel. Error | Jacobian Error | Diffusion MSE |
 |---|---|---|---|
@@ -207,7 +207,7 @@ python experiments/multi_d_ou.py --dim 5 --n-ics 12 --epochs 4000 --output-dir r
 # Snapshot learning (tracked vs shuffled vs independent)
 python experiments/snapshot_learning.py
 
-# PFI benchmark (d=2,5,10) — GPU recommended
+# PFI benchmark (d=2,5,10),GPU recommended
 python experiments/pfi_benchmark.py --system ou --dims 2 5 10
 
 # Timing comparison (NFPE vs Neural SDE)
@@ -251,14 +251,14 @@ experiments/
 
 ### Symbolic regression
 
-Replace the MLP drift $F_\theta(x)$ with a sparse dictionary of basis functions $F(x) = \sum_i c_i \phi_i(x)$ (SINDy-style). This would recover closed-form symbolic expressions — e.g., directly identifying "$F(x) = -x^3$" instead of a black-box network. The moment-based training pipeline is agnostic to the function approximator, so this requires only swapping the parameterization.
+Replace the MLP drift $F_\theta(x)$ with a sparse dictionary of basis functions $F(x) = \sum_i c_i \phi_i(x)$ (SINDy-style). This would recover closed-form symbolic expressions,e.g., directly identifying "$F(x) = -x^3$" instead of a black-box network. The moment-based training pipeline is agnostic to the function approximator, so this requires only swapping the parameterization.
 
 ### Beyond Gaussian closure
 
 The bistable failure motivates three extensions:
-1. **Higher-order moment closure** — include third central moments (skewness) to capture the leading non-Gaussian correction
-2. **Many-component GMM** — tile the distribution with many tightly localized Gaussians, each staying nearly Gaussian by construction
-3. **Hybrid moment-density approach** — use NFPE for coarse structure and augment with a lightweight density estimator for the non-Gaussian residual
+1. **Higher-order moment closure**,include third central moments (skewness) to capture the leading non-Gaussian correction
+2. **Many-component GMM**,tile the distribution with many tightly localized Gaussians, each staying nearly Gaussian by construction
+3. **Hybrid moment-density approach**,use NFPE for coarse structure and augment with a lightweight density estimator for the non-Gaussian residual
 
 ## Acknowledgements
 
